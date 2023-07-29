@@ -22,16 +22,9 @@ const showingNavigationDropdown = ref(false);
                             <div class="shrink-0 flex items-center">
                                 <Link :href="route('dashboard')">
                                     <ApplicationLogo
-                                        class="block h-9 w-auto fill-current text-gray-800"
+                                        class="block h-9 w-auto"
                                     />
                                 </Link>
-                            </div>
-
-                            <!-- Navigation Links -->
-                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                                    Dashboard
-                                </NavLink>
                             </div>
                         </div>
 
@@ -115,6 +108,7 @@ const showingNavigationDropdown = ref(false);
                         <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
                             Dashboard
                         </ResponsiveNavLink>
+                        
                     </div>
 
                     <!-- Responsive Settings Options -->
@@ -138,9 +132,12 @@ const showingNavigationDropdown = ref(false);
 
             <!-- Page Heading -->
             <header class="bg-white shadow" v-if="$slots.header">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+              <!-- Sidebar Izquierdo -->
+                <div class="w-[250px]  py-5 px-[10px] h-screen">
                     <slot name="header" />
                 </div>
+                <!-- Contenedor derecho -->
+                
             </header>
 
             <!-- Page Content -->
