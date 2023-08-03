@@ -1,5 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import IconUploadImage from '@/Components/IconUploadImage.vue';
+import Dropdown from '@/Components/Dropdown.vue';
 import { Head } from '@inertiajs/vue3';
 </script>
 
@@ -7,9 +9,10 @@ import { Head } from '@inertiajs/vue3';
     <Head title="Dashboard" />
 
     <AuthenticatedLayout>
+      <!-- AsideBar -->
         <template #header>
           <!-- Div Photo Profile and username -->
-          <div class="flex gap-[10px] ps-3 mb-5 pt-3 min-w-[230px] min-h-[64px] bg-[#fafafb] rounded-[15px] border border-secondary-gray">
+          <div class="flex gap-[10px] ps-3 mb-5 pt-3 w-[230px] min-h-[64px] bg-[#fafafb] rounded-[15px] border border-secondary-gray">
             <!-- Photo Profile User -->
             <div class="h-[42px] w-[32px]">
               <img src="https://i.pravatar.cc/150?img=3" class="rounded-full w-[32px] h-[32px]">
@@ -27,7 +30,7 @@ import { Head } from '@inertiajs/vue3';
             
           </div>
           <!-- Div Feed,Friends,Photos -->
-          <div class="flex gap-4 flex-col ps-4">
+          <div class="flex gap-4 flex-col  w-[250px] ">
             <!-- Feed -->
               <div class="h-[34.6px] w-[250px]">
                 <a href="#" class="flex gap-5 items-center">
@@ -60,21 +63,79 @@ import { Head } from '@inertiajs/vue3';
                       </svg>
                       <span class="text-[#171725] font-[Poppins] font-semibold text-sm ">Photos</span>
                     </a>
-                </div>
+              </div>
           </div>
         
         </template>
 
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 text-gray-900">You're logged in!</div>
-                </div>
-            </div>
-        </div>
+        <template #asideright>
+          <!-- div principal aside right -->
+          <div>
+            <!-- div con contenido dinamico Feed -->
+              <div class="w-[625px] min-h-screen flex flex-col gap-5">
+                <!-- div post something -->
+                  <div class="h-[107px] bg-white mt-[13px] rounded-[15px] font-[Poppins] text-sm font-medium text-text-h2-gray ">
+                      <div class="pt-[10px] h-10 border-x-0 border-t-0 border-b-[#f1f1f5] border-2">
+                        <h2 class="pl-[15px]">Post Something</h2>
+                      </div>
+
+                      <div class="h-[67px] pl-[15px] flex items-center justify-normal">
+                        <img src="#" alt="profile-photo" class="bg-gray-800 w-9 h-9 rounded-[25px] mr-5 flex " >
+
+                        <a href="#" class="flex text-textgray font-[Poppins] font-semibold text-sm pr-[356px] ">What's on your mind?</a>
+
+                        <!-- Button para subir imagenes -->
+              
+                          <IconUploadImage class="flex"></IconUploadImage>                    
+                        <!-- <input type="text" name="post" id="post" placeholder="What's on your mind?" class="bg-[#f1f1f5] w-[500px] h-[40px] rounded-[25px] pl-[15px] outline-none"> -->
+                      </div>
+                  </div>
+
+                  <div class=" min-h-[269px] h-auto bg-white px-5 pt-5 rounded-[15px] font-[Poppins] text-sm font-medium text-text-h2-gray " >
+                    <div class="h-[42px] flex">
+                         <img src="#" alt="profile-photo" class="bg-gray-800 w-[42px] h-[42px] rounded-[25px] mr-5 flex " >
+                         <div class="w-[109px] h-[42px] flex flex-col gap-1">
+                            <h2>Pan Feng Shui</h2>
+                            <!-- Fecha en que se publico el post -->
+                            <p class="text-xs font-normal font-[Roboto] text-textgray ">12 April at 09.28 PM</p>
+                         </div>
+
+                          <!-- Button with Dropdown -->
+                         <div class="flex justify-end">
+                            <Dropdown align="right" width="48">
+                                        <template #trigger>
+                                            <span class="inline-flex rounded-md">
+                                                <button
+                                                    type="button"
+                                                    class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
+                                                >
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M7 12C7 10.8954 6.10457 10 5 10C3.89543 10 3 10.8954 3 12C3 13.1046 3.89543 14 5 14C6.10457 14 7 13.1046 7 12Z" fill="#92929D"/>
+                                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M14 12C14 10.8954 13.1046 10 12 10C10.8954 10 10 10.8954 10 12C10 13.1046 10.8954 14 12 14C13.1046 14 14 13.1046 14 12Z" fill="#92929D"/>
+                                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M21 12C21 10.8954 20.1046 10 19 10C17.8954 10 17 10.8954 17 12C17 13.1046 17.8954 14 19 14C20.1046 14 21 13.1046 21 12Z" fill="#92929D"/>
+                                                    </svg>
+                                                  
+                                                </button>
+                                            </span>
+                                        </template>
+
+                                        <template #content>
+                                            <DropdownLink :href="route('profile.edit')"> Profile </DropdownLink>
+                                            <DropdownLink :href="route('logout')" method="post" as="button">
+                                                Log Out
+                                            </DropdownLink>
+                                        </template>
+                                  </Dropdown>
+                         </div>
+
+                    </div>
+                  </div>
+              </div>
+          </div>
+        </template>
     </AuthenticatedLayout>
 </template>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Gotu&family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Poppins:wght@300;400;600;700;800&family=Roboto:wght@300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gotu&family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;700&display=swap');
 </style>

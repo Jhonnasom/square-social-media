@@ -12,7 +12,7 @@ const showingNavigationDropdown = ref(false);
 
 <template>
     <div>
-        <div class="min-h-screen bg-gray-100">
+        <div class="min-h-screen bg-[#F1F1F5]">
             <nav class="bg-white border-b border-gray-100">
                 <!-- Primary Navigation Menu -->
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -131,19 +131,23 @@ const showingNavigationDropdown = ref(false);
             </nav>
 
             <!-- Page Heading -->
-            <header class="bg-white shadow" v-if="$slots.header">
-              <!-- Sidebar Izquierdo -->
-                <div class="w-[250px]  py-5 px-[10px] h-screen">
-                    <slot name="header" />
-                </div>
-                <!-- Contenedor derecho -->
+            <div class="flex">
+              <header class="bg-white shadow" v-if="$slots.header">
+                <!-- Sidebar Izquierdo -->
+                  <div class="w-[250px]  py-5 px-[10px] h-screen">
+                      <slot name="header" />
+                  </div>
+                  <!-- Contenedor derecho -->
                 
-            </header>
+              </header>
 
-            <!-- Page Content -->
-            <main>
-                <slot />
-            </main>
+              <!-- Page Content -->
+              <main  v-if="$slots.asideright">
+                  <div class="min-h-screen w-[1154px] flex justify-center items-start">
+                          <slot name="asideright" />
+                    </div>
+              </main>
+            </div>
         </div>
     </div>
 </template>
