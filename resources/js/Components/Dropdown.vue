@@ -27,7 +27,9 @@ onUnmounted(() => document.removeEventListener('keydown', closeOnEscape));
 
 const widthClass = computed(() => {
     return {
-        48: 'w-48',
+      48: 'w-48',
+      280: 'w-[280px]',
+        
     }[props.width.toString()];
 });
 
@@ -45,6 +47,7 @@ const open = ref(false);
 </script>
 
 <template>
+  <!-- Position del dropdown es relativa a su elemento padre -->
     <div class="relative">
         <div @click="open = !open">
             <slot name="trigger" />
@@ -68,7 +71,8 @@ const open = ref(false);
                 style="display: none"
                 @click="open = false"
             >
-                <div class="rounded-md ring-1 ring-black ring-opacity-5" :class="contentClasses">
+            <!-- Div del contenido del Dropdown -->
+                <div class="rounded-md ring-1 ring-black ring-opacity-5 flex flex-col gap-4 py-4 pl-6  " :class="contentClasses">
                     <slot name="content" />
                 </div>
             </div>

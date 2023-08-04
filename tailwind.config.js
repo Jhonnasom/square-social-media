@@ -18,9 +18,11 @@ export default {
         colors: {
           'primary-color': '#0062FF',
           'textgray': '#92929D',
-          'linegray': '#F1E1F5',
+          'linegray': '#F1F1F5',
           'secondary-gray':'#E2E2EA',
           'text-h2-gray': '#171725',
+          'color-posts': '#44444F',
+          'color-input':'#FAFAFB'
           
         },
         },
