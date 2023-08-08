@@ -3,7 +3,7 @@
    <div class="min-w-[902px]  min-h[40px] mt-[32px]">
       <!-- Container de la barra de busqueda -->
      <div class="flex h-10 items-center justify-between mb-9">
-        <h2 class="w-[25%] flex justify-center font-semibold text-2xl leading-9 font-[Poppins] ">Your Photos</h2>
+        <h2 class="w-[18%] flex justify-center font-semibold text-2xl leading-9 font-[Poppins] ">Your Photos</h2>
         <div class="flex items-center w-[55%] rounded-[10px] pl-3  bg-white ">
             <h2 class="text-sm font-normal font-[Roboto] text-[#696974]">Sort by:</h2>
             <select class="border-none focus:ring-0 w-[87%] rounded-[10px] pr-0 text-sm font-[Roboto]">
