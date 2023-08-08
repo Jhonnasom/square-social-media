@@ -22,7 +22,8 @@ export default {
           'secondary-gray':'#E2E2EA',
           'text-h2-gray': '#171725',
           'color-posts': '#44444F',
-          'color-input':'#FAFAFB'
+          'color-input': '#FAFAFB'
+          
           
         },
         },

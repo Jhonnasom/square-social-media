@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import ApplicationLogo from '@/Components/ApplicationLogo.vue';
+import Logo from '@/Components/Logo.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
@@ -12,21 +12,21 @@ const showingNavigationDropdown = ref(false);
 
 <template>
     <div>
-        <div class="min-h-screen bg-[#F1F1F5]">
+      <!-- Container Principal -->
+        <div class="min-h-screen bg-[#F1F1F5] overflow-x-hidden">
+            <!-- Navigation -->
             <nav class="bg-white border-b border-gray-100">
                 <!-- Primary Navigation Menu -->
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="max-w-7xl mx-auto px-6">
                     <div class="flex justify-between h-16">
-                        <div class="flex">
-                            <!-- Logo -->
+                          <!-- Logo -->
                             <div class="shrink-0 flex items-center">
                                 <Link :href="route('dashboard')">
-                                    <ApplicationLogo
-                                        class="block h-9 w-auto"
-                                    />
+                                    <Logo></Logo>
+                                    
                                 </Link>
                             </div>
-                        </div>
+                        
 
                         <div class="hidden sm:flex sm:items-center sm:ml-6">
                             <!-- Settings Dropdown -->
@@ -38,20 +38,21 @@ const showingNavigationDropdown = ref(false);
                                                 type="button"
                                                 class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
                                             >
-                                                {{ $page.props.auth.user.name }}
-
-                                                <svg
-                                                    class="ml-2 -mr-0.5 h-4 w-4"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    viewBox="0 0 20 20"
-                                                    fill="currentColor"
-                                                >
-                                                    <path
-                                                        fill-rule="evenodd"
-                                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                        clip-rule="evenodd"
-                                                    />
+                                                <!-- {{ $page.props.auth.user.name }} -->
+                                                <!-- Icon Notifications -->
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                <path fill-rule="evenodd" clip-rule="evenodd" d="M14.98 4.64094C14.8026 3.15337 13.5367 2 12.0013 2C10.466 2 9.2 3.15337 9.02257 4.64094C6.5199 5.77546 4.77908 8.29555 4.77908 11.2222V16.2399L3.10858 19.5494C2.77286 20.2145 3.25626 21 4.0013 21H9.17201C9.58385 22.1652 10.6951 23 12.0013 23C13.3075 23 14.4188 22.1652 14.8306 21H20.0013C20.7463 21 21.2297 20.2145 20.894 19.5494L19.2235 16.2399V11.2222C19.2235 8.29555 17.4827 5.77546 14.98 4.64094ZM17.3308 16.9286L18.3764 19H5.62623L6.6718 16.9286C6.74234 16.7888 6.77908 16.6345 6.77908 16.478V11.2222C6.77908 8.33807 9.11715 6 12.0013 6C14.8855 6 17.2235 8.33807 17.2235 11.2222V16.478C17.2235 16.6345 17.2603 16.7888 17.3308 16.9286Z" fill="#92929D"/>
+                                                <path fill-rule="evenodd" clip-rule="evenodd" d="M19 8C21.2091 8 23 6.20914 23 4C23 1.79086 21.2091 0 19 0C16.7909 0 15 1.79086 15 4C15 6.20914 16.7909 8 19 8Z" fill="#FC5A5A"/>
                                                 </svg>
+
+                                                <!-- Photo Profile User -->
+                                                <img src="#" alt="profile-photo" class="bg-gray-800 w-[34px] h-[34px] rounded-[25px] flex ml-[25px] " >
+
+                                                <!-- Icon Dropdown -->
+                                                <svg class="ml-[13px]" xmlns="http://www.w3.org/2000/svg" width="11" height="8" viewBox="0 0 11 8" fill="none">
+                                                <path fill-rule="evenodd" clip-rule="evenodd" d="M9.98762 0.461304C10.2559 0.461304 10.4051 0.771682 10.2375 0.981206L5.44196 6.97562C5.31386 7.13575 5.07031 7.13575 4.94221 6.97562L0.146672 0.981206C-0.0209475 0.771682 0.128228 0.461304 0.39655 0.461304L9.98762 0.461304Z" fill="#92929D"/>
+                                                </svg>
+
                                             </button>
                                         </span>
                                     </template>
@@ -131,10 +132,10 @@ const showingNavigationDropdown = ref(false);
             </nav>
 
             <!-- Page Heading -->
-            <div class="flex">
-              <header class="bg-white shadow" v-if="$slots.header">
+            <div class="flex w-screen ">
+              <header class="bg-white shadow w-[20%] " v-if="$slots.header">
                 <!-- Sidebar Izquierdo -->
-                  <div class="w-[250px]  py-5 px-[10px] h-screen">
+                  <div class="py-5 px-[10px] h-screen">
                       <slot name="header" />
                   </div>
                   <!-- Contenedor derecho -->
@@ -142,8 +143,8 @@ const showingNavigationDropdown = ref(false);
               </header>
 
               <!-- Page Content -->
-              <main  v-if="$slots.asideright">
-                  <div class="min-h-screen w-[1154px] flex justify-center items-start">
+              <main  v-if="$slots.asideright" class="w-[80%]">
+                  <div class="min-h-screen  flex justify-center items-start">
                           <slot name="asideright" />
                     </div>
               </main>
