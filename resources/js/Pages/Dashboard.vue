@@ -12,14 +12,20 @@ import Feed from '@/Pages/Feed.vue';
 import Friends from '@/Pages/Friends.vue';
 import Photos from './Photos.vue';
 import Profile from './Profile.vue';
+import Notifications from './Notifications.vue';
 
 const idMenu = ref(1);
+
+function showNotifications() {
+  idMenu.value = 5;
+}
 </script>
 
 <template>
     <Head title="Dashboard" />
-
-    <AuthenticatedLayout>
+    
+    <!-- Funcion Emit y Listeners -->
+    <AuthenticatedLayout @showNotifications="showNotifications">
       <!-- AsideBar -->
         <template #header>
           <!-- Div Photo Profile and username -->
@@ -87,6 +93,7 @@ const idMenu = ref(1);
               <Friends v-if="idMenu==2"></Friends>
               <Photos v-if="idMenu==3"></Photos>
               <Profile v-if="idMenu==4"></Profile>
+              <Notifications v-if="idMenu==5"></Notifications>
           </div>
         </template>
     </AuthenticatedLayout>
