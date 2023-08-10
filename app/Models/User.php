@@ -6,6 +6,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -21,6 +23,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'alias',
+        'description',
+        
     ];
 
     /**
@@ -42,4 +47,36 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function posts():HasMany{
+      return $this->hasMany(Post::class);
+    }
+
+    public function likes():HasMany{
+      return $this->hasMany(Like::class);
+    }
+
+    public function shares():HasMany{
+      return $this->hasMany(Share::class);
+    }
+
+    public function saveds():HasMany{
+      return $this->hasMany(Saved::class);
+    }
+
+    public function notifications():HasMany{
+      return $this->hasMany(Notification::class);
+    }
+
+    public function comments():HasMany{
+      return $this->hasMany(Comment::class);
+    }
+
+    public function followers():BelongsToMany{
+      return $this->belongsToMany(static::class, 'followers', 'followed_id', 'follower_id');
+    }
+
+    public function following():BelongsToMany{
+      return $this->belongsToMany(static::class, 'followers', 'follower_id', 'followed_id');
+    }
 }
