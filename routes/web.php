@@ -25,6 +25,13 @@ Route::get('/', function () {
     ]);
 });
 
+//to create tokens to consume api from postman
+Route::get('/tokens/create', function () {
+    $token = Auth()->user()->createToken('main-token');
+ 
+    return ['token' => $token->plainTextToken];
+});
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
