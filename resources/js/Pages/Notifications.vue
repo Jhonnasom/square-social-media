@@ -145,7 +145,7 @@ import { Dropdown, ListGroup, ListGroupItem } from "flowbite-vue";
 
             <!-- Notifications Likes -->
             <div
-                class="h-[78px] bg-primary-color/5 rounded-[15px] flex py-[18px] px-5 justify-between"
+                class="h-[78px] bg-white rounded-[15px] flex py-[18px] px-5 justify-between"
             >
                 <!-- Div Photo & Text Notifications -->
                 <div class="flex gap-5">
