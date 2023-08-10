@@ -13,11 +13,9 @@ return new class extends Migration
     {
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
+            $table->morphs('model');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignUuid('post_id')->constrained()->onDelete('cascade');
-            $table->foreignId('comment_id')->constrained()->onDelete('cascade');
-            $table->boolean('read')->default(false);
-            $table->string('type');
+            $table->boolean('is_read')->default(false);
             $table->timestamps();
         });
     }
