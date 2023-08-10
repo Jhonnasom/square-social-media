@@ -13,7 +13,8 @@ class CommentController extends Controller
      */
     public function index()
     {
-        //
+      $comments = Comment::orderBy('id', 'desc')->get();
+      return response()->json($comments);
     }
 
     /**
@@ -21,7 +22,13 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $request->validate([
+        'description' => 'required',
+      ]);
+
+      return auth()->user()->comments()->create([
+        'description' => $request->description,
+      ]);
     }
 
     /**
@@ -37,7 +44,13 @@ class CommentController extends Controller
      */
     public function update(Request $request, Comment $comment)
     {
-        //
+      $request->validate([
+        'description' => 'required',
+      ]);
+
+      $comment->update($request->all());
+
+      return response()->json('Comment updated!');
     }
 
     /**
@@ -45,6 +58,8 @@ class CommentController extends Controller
      */
     public function destroy(Comment $comment)
     {
-        //
+      $comment_found= auth()->user()->comments()->findOrFail($comment->id);
+      $comment_found->delete();
+      return response()->json('Comment deleted!');
     }
 }
