@@ -13,15 +13,23 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $posts = Post::orderBy('id', 'desc')->get();
+        return response()->json($posts);
     }
+    
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'description' => 'required',
+        ]);
+
+        return auth()->user()->posts()->create([
+            'description' => $request->description,
+        ]);
     }
 
     /**
@@ -37,7 +45,13 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $request->validate([
+            'description' => 'required',
+        ]);
+
+        $post->update($request->all());
+
+        return response()->json('Post updated!');
     }
 
     /**
@@ -45,6 +59,9 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post_found = auth()->user()->posts()->findOrFail($post->id);
+        $post_found->delete();
+        return response()->json('Post deleted!');
+
     }
 }
