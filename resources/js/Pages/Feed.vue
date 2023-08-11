@@ -226,6 +226,7 @@ axios
             :shares_count="post.shares_count"
             :saveds_count="post.saveds_count"
             :liked="post.liked"
+            :saved="post.saved"
             @post_updated="post_updated"
         ></shape-post>
         <ShapePost>

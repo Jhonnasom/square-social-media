@@ -14,7 +14,7 @@ class SavedController extends Controller
      */
     public function index(Post $post)
     {
-      $saved = $post->saved()->orderBy('id', 'desc')->get();
+      $saved = $post->saveds()->orderBy('id', 'desc')->get();
       return response()->json($saved);
     }
 
@@ -23,9 +23,16 @@ class SavedController extends Controller
      */
     public function store(Post $post, Request $request)
     {
-        return $saved = auth()->user()->saveds()->create([
-          'post_id' => $request->post_id,
-        ]);
+        $saved = auth()->user()->saveds()->where('post_id', $post->id)->first();
+
+        if ($saved != null) {
+          $saved->delete();
+          return response()->json('Post Unsaved!');
+        } else {
+          return $saved = auth()->user()->saveds()->create([
+            'post_id' => $post->id,
+          ]);
+        }
     }
 
     /**
