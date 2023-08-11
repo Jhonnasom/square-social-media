@@ -10,6 +10,18 @@ function closeModal() {
 function showModal() {
     isShowModal.value = true;
 }
+
+// consumiendo un api con axios
+const posts = ref([]);
+axios
+    .get("http://127.0.0.1:8000/api/posts")
+    .then((response) => {
+        posts.value = response.data;
+        console.log(posts.value);
+    })
+    .catch((error) => {
+        console.log(error);
+    });
 </script>
 
 <template>
@@ -162,6 +174,17 @@ function showModal() {
             </div>
         </div>
 
+        <div v-for="post in posts" :key="post.id">
+            <shape-post
+                :user_name="post.user.name"
+                :date="post.created_at"
+                :description="post.description"
+                :comments_count="post.comments_count"
+                :likes_count="post.likes_count"
+                :shares_count="post.shares_count"
+                :saves_count="post.saves_count"
+            ></shape-post>
+        </div>
         <ShapePost>
             <!-- Container de post images -->
             <template #post-content>
@@ -195,7 +218,5 @@ function showModal() {
                 </div>
             </template>
         </ShapePost>
-
-        <ShapePost></ShapePost>
     </div>
 </template>
