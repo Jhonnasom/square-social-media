@@ -32,9 +32,17 @@ class PostController extends Controller
             'description' => 'required',
         ]);
 
-        return auth()->user()->posts()->create([
+        $post = auth()->user()->posts()->create([
             'description' => $request->description,
         ]);
+
+        $post_created = Post::with('user')
+        ->withCount('likes')
+        ->withCount('shares')
+        ->withCount('saves')
+        ->find($post->id);
+
+        return $post_created;
     }
 
     /**
