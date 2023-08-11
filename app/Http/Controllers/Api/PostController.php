@@ -13,7 +13,12 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::orderBy('id', 'desc')->get();
+        $posts = Post::with('user')
+        ->withCount('comments')
+        ->withCount('likes')
+        ->withCount('shares')
+        ->withCount('saves')
+        ->orderBy('id', 'desc')->get();
         return response()->json($posts);
     }
     
