@@ -37,6 +37,19 @@ function createPost() {
         });
 }
 
+function post_updated(post_id) {
+    axios
+        .get("http://127.0.0.1:8000/api/posts/" + post_id)
+        .then((response) => {
+            const post_updated = response.data;
+            const index = posts.value.findIndex((post) => post.id === post_id);
+            posts.value[index] = post_updated;
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+}
+
 // consumiendo un api con axios
 const posts = ref([]);
 axios
@@ -206,11 +219,14 @@ axios
             :key="post.id"
             :user_name="post.user.name"
             :date="post.created_at"
+            :post_id="post.id"
             :description="post.description"
             :comments_count="post.comments_count"
             :likes_count="post.likes_count"
             :shares_count="post.shares_count"
             :saves_count="post.saves_count"
+            :liked="post.liked"
+            @post_updated="post_updated"
         ></shape-post>
         <ShapePost>
             <!-- Container de post images -->
