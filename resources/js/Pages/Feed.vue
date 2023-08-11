@@ -11,6 +11,31 @@ function showModal() {
     isShowModal.value = true;
 }
 
+const publishPost = ref({
+    description: "",
+});
+
+function createPost() {
+    if (publishPost.value.description === "") {
+        alert("Please write something");
+        return;
+    }
+    axios
+        .post("http://127.0.0.1:8000/api/posts", {
+            description: publishPost.value.description,
+        })
+        .then((response) => {
+            const newPost = response.data;
+            posts.value.unshift(newPost);
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+        .finally(() => {
+            closeModal();
+        });
+}
+
 // consumiendo un api con axios
 const posts = ref([]);
 axios
@@ -87,6 +112,7 @@ axios
                                 >
                                     <!-- Input Write any comment -->
                                     <textarea
+                                        v-model="publishPost.description"
                                         placeholder="What’s on your mind?"
                                         class="w-[100%] h-auto border-none rounded[15px] flex text-color-posts pl-[15px] py-[11px] bg-white focus:ring-white"
                                     />
@@ -142,7 +168,7 @@ axios
                                 </label>
 
                                 <button
-                                    @click="closeModal"
+                                    @click="createPost"
                                     type="button"
                                     class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                                 >
@@ -174,17 +200,17 @@ axios
             </div>
         </div>
 
-        <div v-for="post in posts" :key="post.id">
-            <shape-post
-                :user_name="post.user.name"
-                :date="post.created_at"
-                :description="post.description"
-                :comments_count="post.comments_count"
-                :likes_count="post.likes_count"
-                :shares_count="post.shares_count"
-                :saves_count="post.saves_count"
-            ></shape-post>
-        </div>
+        <shape-post
+            v-for="post in posts"
+            :key="post.id"
+            :user_name="post.user.name"
+            :date="post.created_at"
+            :description="post.description"
+            :comments_count="post.comments_count"
+            :likes_count="post.likes_count"
+            :shares_count="post.shares_count"
+            :saves_count="post.saves_count"
+        ></shape-post>
         <ShapePost>
             <!-- Container de post images -->
             <template #post-content>
