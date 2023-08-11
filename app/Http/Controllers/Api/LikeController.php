@@ -30,7 +30,8 @@ class LikeController extends Controller
             'post_id' => $post->id,
           ]);
         } else {
-          return response()->json('Like already exists!');
+          $like->delete();
+          return response()->json('Like deleted!');
         }
     }
 
