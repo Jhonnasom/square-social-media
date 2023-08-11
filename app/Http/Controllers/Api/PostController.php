@@ -13,11 +13,18 @@ class PostController extends Controller
      */
     public function index()
     {
+        $user_id = auth()->user()->id;
         $posts = Post::with('user')
         ->withCount('comments')
         ->withCount('likes')
         ->withCount('shares')
         ->withCount('saves')
+        ->withCount(['likes as liked' => function ($query) use ($user_id) {
+            $query->where('user_id', $user_id);
+        }])
+        ->withCount(['saves as saved' => function ($query) use ($user_id) {
+            $query->where('user_id', $user_id);
+        }])
         ->orderBy('id', 'desc')->get();
         return response()->json($posts);
     }
@@ -31,7 +38,7 @@ class PostController extends Controller
         $request->validate([
             'description' => 'required',
         ]);
-
+        $user_id = auth()->user()->id;
         $post = auth()->user()->posts()->create([
             'description' => $request->description,
         ]);
@@ -40,6 +47,12 @@ class PostController extends Controller
         ->withCount('likes')
         ->withCount('shares')
         ->withCount('saves')
+        ->withCount(['likes as liked' => function ($query) use ($user_id) {
+            $query->where('user_id', $user_id);
+        }])
+        ->withCount(['saves as saved' => function ($query) use ($user_id) {
+            $query->where('user_id', $user_id);
+        }])
         ->find($post->id);
 
         return $post_created;
@@ -50,7 +63,20 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        $user_id = auth()->user()->id;
+        $post_found = Post::with('user')
+        ->withCount('likes')
+        ->withCount('shares')
+        ->withCount('saves')
+        ->withCount(['likes as liked' => function ($query) use ($user_id) {
+            $query->where('user_id', $user_id);
+        }])
+        ->withCount(['saves as saved' => function ($query) use ($user_id) {
+            $query->where('user_id', $user_id);
+        }])
+        ->find($post->id);
+
+        return response()->json($post_found);
     }
 
     /**
