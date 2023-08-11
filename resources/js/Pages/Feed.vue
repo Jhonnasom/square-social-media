@@ -32,6 +32,7 @@ function createPost() {
             console.log(error);
         })
         .finally(() => {
+            publishPost.value.description = "";
             closeModal();
         });
 }
