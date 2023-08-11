@@ -23,7 +23,7 @@ class SavedController extends Controller
      */
     public function store(Post $post, Request $request)
     {
-        return $saved = auth()->user()->saved()->create([
+        return $saved = auth()->user()->saveds()->create([
           'post_id' => $request->post_id,
         ]);
     }

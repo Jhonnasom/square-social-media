@@ -18,11 +18,11 @@ class PostController extends Controller
         ->withCount('comments')
         ->withCount('likes')
         ->withCount('shares')
-        ->withCount('saves')
+        ->withCount('saveds')
         ->withCount(['likes as liked' => function ($query) use ($user_id) {
             $query->where('user_id', $user_id);
         }])
-        ->withCount(['saves as saved' => function ($query) use ($user_id) {
+        ->withCount(['saveds as saved' => function ($query) use ($user_id) {
             $query->where('user_id', $user_id);
         }])
         ->orderBy('id', 'desc')->get();
@@ -46,11 +46,11 @@ class PostController extends Controller
         $post_created = Post::with('user')
         ->withCount('likes')
         ->withCount('shares')
-        ->withCount('saves')
+        ->withCount('saveds')
         ->withCount(['likes as liked' => function ($query) use ($user_id) {
             $query->where('user_id', $user_id);
         }])
-        ->withCount(['saves as saved' => function ($query) use ($user_id) {
+        ->withCount(['saveds as saved' => function ($query) use ($user_id) {
             $query->where('user_id', $user_id);
         }])
         ->find($post->id);
@@ -67,11 +67,11 @@ class PostController extends Controller
         $post_found = Post::with('user')
         ->withCount('likes')
         ->withCount('shares')
-        ->withCount('saves')
+        ->withCount('saveds')
         ->withCount(['likes as liked' => function ($query) use ($user_id) {
             $query->where('user_id', $user_id);
         }])
-        ->withCount(['saves as saved' => function ($query) use ($user_id) {
+        ->withCount(['saveds as saved' => function ($query) use ($user_id) {
             $query->where('user_id', $user_id);
         }])
         ->find($post->id);

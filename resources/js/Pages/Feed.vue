@@ -224,7 +224,7 @@ axios
             :comments_count="post.comments_count"
             :likes_count="post.likes_count"
             :shares_count="post.shares_count"
-            :saves_count="post.saves_count"
+            :saveds_count="post.saveds_count"
             :liked="post.liked"
             @post_updated="post_updated"
         ></shape-post>

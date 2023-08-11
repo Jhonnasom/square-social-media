@@ -33,7 +33,7 @@ class Post extends Model
         return $this->hasMany(Share::class);
     }
 
-    public function saves(): HasMany{
+    public function saveds(): HasMany{
         return $this->hasMany(Saved::class);
     }
 

@@ -10,7 +10,7 @@ const props = defineProps({
     likes_count: Number,
     liked: Number,
     shares_count: Number,
-    saves_count: Number,
+    saveds_count: Number,
 });
 const emit = defineEmits(["post_updated"]);
 
@@ -267,7 +267,7 @@ function likePost(id) {
                     />
                 </svg>
                 <div>
-                    <span>{{ saves_count }} Saved</span>
+                    <span>{{ saveds_count }} Saved</span>
                 </div>
             </div>
         </div>
