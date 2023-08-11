@@ -33,6 +33,10 @@ class Post extends Model
         return $this->hasMany(Share::class);
     }
 
+    public function saves(): HasMany{
+        return $this->hasMany(Saved::class);
+    }
+
     public function parent(): BelongsTo{
         return $this->belongsTo(Post::class);
     }
