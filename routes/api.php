@@ -21,8 +21,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //Agrupar los middlewares
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('posts', 'App\Http\Controllers\Api\PostController');
-    Route::apiResource('comments', 'App\Http\Controllers\Api\CommentController');
-    Route::apiResource('likes', 'App\Http\Controllers\Api\LikeController');
-    Route::apiResource('shares', 'App\Http\Controllers\Api\ShareController');
-    Route::apiResource('saved', 'App\Http\Controllers\Api\SavedController');
+    Route::apiResource('posts.comments', 'App\Http\Controllers\Api\CommentController');
+    Route::apiResource('posts.likes', 'App\Http\Controllers\Api\LikeController');
+    Route::apiResource('posts.shares', 'App\Http\Controllers\Api\ShareController');
+    Route::apiResource('posts.saved', 'App\Http\Controllers\Api\SavedController');
 });
