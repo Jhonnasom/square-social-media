@@ -44,6 +44,7 @@ class PostController extends Controller
         ]);
 
         $post_created = Post::with('user')
+        ->withCount('comments')
         ->withCount('likes')
         ->withCount('shares')
         ->withCount('saveds')
@@ -65,6 +66,7 @@ class PostController extends Controller
     {
         $user_id = auth()->user()->id;
         $post_found = Post::with('user')
+        ->withCount('comments')
         ->withCount('likes')
         ->withCount('shares')
         ->withCount('saveds')
