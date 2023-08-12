@@ -50,6 +50,18 @@ function post_updated(post_id) {
         });
 }
 
+function post_deleted(post_id) {
+    const index = posts.value.findIndex((post) => post.id === post_id);
+    posts.value.splice(index, 1);
+}
+
+function onFileChanged($event) {
+    const target = $event.target;
+    if (target && target.files) {
+        publishPost.value.images = target.files[0];
+    }
+}
+
 // consumiendo un api con axios
 const posts = ref([]);
 axios
@@ -230,6 +242,7 @@ axios
             :liked="post.liked"
             :saved="post.saved"
             @post_updated="post_updated"
+            @post_deleted="post_deleted"
         ></shape-post>
         <ShapePost>
             <!-- Container de post images -->

@@ -2,6 +2,7 @@
 import { toRefs, ref, defineProps } from "vue";
 import moment from "moment";
 import Dropdown from "./Dropdown.vue";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 const props = defineProps({
     auth_id: Number,
@@ -17,7 +18,7 @@ const props = defineProps({
     shares_count: Number,
     saveds_count: Number,
 });
-const emit = defineEmits(["post_updated"]);
+const emit = defineEmits(["post_updated", "post_deleted"]);
 
 const selected_color = "#0062FF";
 const unselected_color = "#92929D";
@@ -73,6 +74,25 @@ function commentPost(id) {
         .finally(() => {
             new_comment.value = "";
             emit("post_updated", id);
+        });
+}
+
+function deletePost(id) {
+    const confirm = window.confirm(
+        "Are you sure you want to delete this post?"
+    );
+    if (!confirm) return;
+
+    axios
+        .delete(url_api + "/" + id)
+        .then((response) => {
+            const post = response.data;
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+        .finally(() => {
+            emit("post_deleted", id);
         });
 }
 
@@ -236,6 +256,24 @@ function showComments(id) {
                                     <span
                                         class="font-[Roboto] text-xs font-normal text-textgray leading-4"
                                         >Disconnected with this person</span
+                                    >
+                                </div>
+                            </div>
+                        </DropdownLink>
+                        <DropdownLink as="button" v-if="auth_id == user_id">
+                            <div class="flex gap-3">
+                                <font-awesome-icon
+                                    :icon="['fas', 'trash']"
+                                    style="color: #92929d"
+                                />
+                                <div
+                                    class="flex flex-col gap-[6px]"
+                                    @click="deletePost(post_id)"
+                                >
+                                    <a href="#">Delete Post”</a>
+                                    <span
+                                        class="font-[Roboto] text-xs font-normal text-textgray leading-4"
+                                        >You can delete this post</span
                                     >
                                 </div>
                             </div>
