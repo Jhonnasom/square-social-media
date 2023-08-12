@@ -217,6 +217,8 @@ axios
         <shape-post
             v-for="post in posts"
             :key="post.id"
+            :auth_id="post.auth_id"
+            :user_id="post.user.id"
             :user_name="post.user.name"
             :date="post.created_at"
             :post_id="post.id"

@@ -4,6 +4,8 @@ import moment from "moment";
 import Dropdown from "./Dropdown.vue";
 
 const props = defineProps({
+    auth_id: Number,
+    user_id: Number,
     user_name: String,
     date: String,
     post_id: Number,
@@ -154,7 +156,7 @@ function showComments(id) {
 
                     <template #content>
                         <!-- Se tiene que hacer el metodo save link-->
-                        <DropdownLink :href="route('profile.edit')">
+                        <DropdownLink v-if="auth_id != user_id">
                             <div class="flex gap-3">
                                 <!-- <fa :icon="['far','bookmark']" size="lg" style="color:#92929D" /> -->
                                 <svg
@@ -180,11 +182,7 @@ function showComments(id) {
                                 </div>
                             </div>
                         </DropdownLink>
-                        <DropdownLink
-                            :href="route('logout')"
-                            method="post"
-                            as="button"
-                        >
+                        <DropdownLink as="button" v-if="auth_id != user_id">
                             <div class="flex gap-3">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -208,7 +206,7 @@ function showComments(id) {
                                 </svg>
                                 <div class="flex flex-col gap-[6px]">
                                     <a href="#"
-                                        >Hide all from “Pan Feng Shui”</a
+                                        >Hide all from “{{ user_name }}”</a
                                     >
                                     <span
                                         class="font-[Roboto] text-xs font-normal text-textgray leading-4"
@@ -217,11 +215,7 @@ function showComments(id) {
                                 </div>
                             </div>
                         </DropdownLink>
-                        <DropdownLink
-                            :href="route('logout')"
-                            method="post"
-                            as="button"
-                        >
+                        <DropdownLink as="button" v-if="auth_id != user_id">
                             <div class="flex gap-3">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -238,7 +232,7 @@ function showComments(id) {
                                     />
                                 </svg>
                                 <div class="flex flex-col gap-[6px]">
-                                    <a href="#">Unfollow “Pan Feng Shui”</a>
+                                    <a href="#">Unfollow “{{ user_name }}”</a>
                                     <span
                                         class="font-[Roboto] text-xs font-normal text-textgray leading-4"
                                         >Disconnected with this person</span

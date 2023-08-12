@@ -25,6 +25,7 @@ class PostController extends Controller
         ->withCount(['saveds as saved' => function ($query) use ($user_id) {
             $query->where('user_id', $user_id);
         }])
+        ->addSelect(\DB::raw( $user_id . ' as auth_id'))
         ->orderBy('id', 'desc')->get();
         return response()->json($posts);
     }
@@ -54,6 +55,7 @@ class PostController extends Controller
         ->withCount(['saveds as saved' => function ($query) use ($user_id) {
             $query->where('user_id', $user_id);
         }])
+        ->addSelect(\DB::raw( $user_id . ' as auth_id'))
         ->find($post->id);
 
         return $post_created;
@@ -76,6 +78,7 @@ class PostController extends Controller
         ->withCount(['saveds as saved' => function ($query) use ($user_id) {
             $query->where('user_id', $user_id);
         }])
+        ->addSelect(\DB::raw( $user_id . ' as auth_id'))
         ->find($post->id);
 
         return response()->json($post_found);
