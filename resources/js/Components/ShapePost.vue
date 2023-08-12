@@ -1,6 +1,8 @@
 <script setup>
 import { toRefs, ref, defineProps } from "vue";
 import moment from "moment";
+import Dropdown from "./Dropdown.vue";
+
 const props = defineProps({
     user_name: String,
     date: String,
@@ -15,17 +17,20 @@ const props = defineProps({
 });
 const emit = defineEmits(["post_updated"]);
 
-const selected_color = "#FF0000";
+const selected_color = "#0062FF";
 const unselected_color = "#92929D";
 //const post = toRefs(props, "post");
+const new_comment = ref("");
 
 function formatDate(date) {
     return moment(String(date)).format("DD MMMM [at] hh:mm A");
 }
 
+const url_api = "http://127.0.0.1:8000/api/posts";
+
 function likePost(id) {
     axios
-        .post("http://127.0.0.1:8000/api/posts/" + id + "/likes")
+        .post(url_api + "/" + id + "/likes")
         .then((response) => {
             const likes = response.data;
         })
@@ -39,7 +44,7 @@ function likePost(id) {
 
 function savePost(id) {
     axios
-        .post("http://127.0.0.1:8000/api/posts/" + id + "/saved")
+        .post(url_api + "/" + id + "/saved")
         .then((response) => {
             const saved = response.data;
         })
@@ -50,22 +55,57 @@ function savePost(id) {
             emit("post_updated", id);
         });
 }
+
+function commentPost(id) {
+    axios
+        .post(url_api + "/" + id + "/comments", {
+            description: new_comment.value,
+        })
+        .then((response) => {
+            const comment = response.data;
+            comments.value.unshift(comment);
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+        .finally(() => {
+            new_comment.value = "";
+            emit("post_updated", id);
+        });
+}
+
+const isCommentDisplayed = ref(false);
+const comments = ref([]);
+function showComments(id) {
+    isCommentDisplayed.value = !isCommentDisplayed.value;
+    if (isCommentDisplayed.value) {
+        axios
+            .get(url_api + "/" + id + "/comments")
+            .then((response) => {
+                comments.value = response.data;
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+}
 </script>
 <template>
     <div
-        class="min-h-[269px] h-auto bg-white px-5 py-5 rounded-[15px] font-[Poppins] text-sm font-medium text-text-h2-gray"
+        class="min-h-[269px] bg-white px-5 py-5 rounded-[15px] font-[Poppins] text-sm font-medium text-text-h2-gray"
     >
         <!-- Container Photo, Name and Datetime -->
         <div class="flex justify-between mb-5">
             <div class="h-[42px] flex">
+                <!-- Photo -->
                 <img
                     src="#"
                     alt="profile-photo"
                     class="bg-gray-800 w-[42px] h-[42px] rounded-[25px] mr-5 flex"
                 />
-                <div class="w-[109px] h-[42px] flex flex-col gap-1">
+                <!-- Name and Datetime -->
+                <div class="w-auto h-[42px] flex flex-col gap-1">
                     <h2>{{ user_name }}</h2>
-                    <!-- Fecha en que se publico el post -->
                     <p class="text-xs font-normal font-[Roboto] text-textgray">
                         <!-- 12 April at 09.28 PM -->
                         {{ formatDate(date) }}
@@ -227,7 +267,10 @@ function savePost(id) {
         <div
             class="w-[585px] flex gap-12 font-[Roboto] text-color-posts pl-[10px]"
         >
-            <div class="flex gap-[10px] items-center">
+            <div
+                class="flex gap-[10px] items-center"
+                @click="showComments(post_id)"
+            >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -299,7 +342,7 @@ function savePost(id) {
             <img
                 src="#"
                 alt="profile-photo"
-                class="bg-gray-800 w-[36px] h-[36px] rounded-[25px] mr-[10px] flex"
+                class="bg-gray-800 w-[38px] h-[36px] rounded-[25px] mr-[10px] flex"
             />
 
             <!--Div Input Write any comment and Upload Image -->
@@ -309,6 +352,8 @@ function savePost(id) {
                 <!-- Input Write any comment -->
                 <input
                     type="text"
+                    v-model="new_comment"
+                    v-on:keyup.enter="commentPost(post_id)"
                     placeholder="Write your comment"
                     class="w-[93%] h-[43px] border-none rounded[15px] flex text-color-posts pl-[15px] py-[11px] bg-color-input focus:ring-linegray"
                 />
@@ -330,6 +375,28 @@ function savePost(id) {
                         />
                     </svg>
                 </label>
+            </div>
+        </div>
+        <!-- Comments writes -->
+        <div class="mt-5 flex flex-col gap-4" v-if="isCommentDisplayed">
+            <!-- Comments1 -->
+            <div
+                class="h-[46p] flex items-center"
+                v-for="comment in comments"
+                :key="comment.id"
+            >
+                <!-- Icon Profile -->
+                <img
+                    src="#"
+                    alt="profile-photo"
+                    class="bg-gray-800 w-[38px] h-[36px] rounded-[25px] mr-[10px] flex"
+                />
+                <div
+                    class="w-[100%] h-[46px] bg-primary-color/25 border-linegray rounded-[15px] font-[Roboto] flex items-center justify-start p-[15px]"
+                >
+                    <!-- Comments -->
+                    <h2>{{ comment.description }}</h2>
+                </div>
             </div>
         </div>
     </div>
