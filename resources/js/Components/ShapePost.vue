@@ -17,6 +17,7 @@ const props = defineProps({
     saved: Number,
     shares_count: Number,
     saveds_count: Number,
+    media: [],
 });
 const emit = defineEmits(["post_updated", "post_deleted"]);
 
@@ -132,6 +133,9 @@ function showComments(id) {
                         <!-- 12 April at 09.28 PM -->
                         {{ formatDate(date) }}
                     </p>
+                    <div v-for="image in media" :key="image.id">
+                        <img :src="image.original_url" />
+                    </div>
                 </div>
             </div>
 

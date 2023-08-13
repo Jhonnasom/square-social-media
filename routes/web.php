@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PostController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -40,6 +41,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::resource('/feed', PostController::class);
+    Route::get('/friends', function () {
+        return Inertia::render('Friends');
+    })->name('friends');
+    Route::get('/photos', function () {
+        return Inertia::render('Photos');
+    })->name('photos');
 });
 
 require __DIR__.'/auth.php';
