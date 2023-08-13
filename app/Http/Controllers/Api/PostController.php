@@ -19,6 +19,7 @@ class PostController extends Controller
         ->withCount('likes')
         ->withCount('shares')
         ->withCount('saveds')
+        ->with('media')
         ->withCount(['likes as liked' => function ($query) use ($user_id) {
             $query->where('user_id', $user_id);
         }])
@@ -44,11 +45,18 @@ class PostController extends Controller
             'description' => $request->description,
         ]);
 
+        if ($request->has('images')) {
+          foreach ($request->images as $image) {
+            $post->addMedia($image)->toMediaCollection('image_post');
+          }
+        }
+
         $post_created = Post::with('user')
         ->withCount('comments')
         ->withCount('likes')
         ->withCount('shares')
         ->withCount('saveds')
+        ->with('media')
         ->withCount(['likes as liked' => function ($query) use ($user_id) {
             $query->where('user_id', $user_id);
         }])
@@ -72,6 +80,7 @@ class PostController extends Controller
         ->withCount('likes')
         ->withCount('shares')
         ->withCount('saveds')
+        ->with('media')
         ->withCount(['likes as liked' => function ($query) use ($user_id) {
             $query->where('user_id', $user_id);
         }])

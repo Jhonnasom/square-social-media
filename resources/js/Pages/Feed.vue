@@ -13,6 +13,7 @@ function showModal() {
 
 const publishPost = ref({
     description: "",
+    images: [],
 });
 
 function createPost() {
@@ -20,9 +21,16 @@ function createPost() {
         alert("Please write something");
         return;
     }
+    const formData = new FormData();
+    formData.append("description", publishPost.value.description);
+    for (let i = 0; i < publishPost.value.images.length; i++) {
+        formData.append("images[]", publishPost.value.images[i]);
+    }
     axios
-        .post("http://127.0.0.1:8000/api/posts", {
-            description: publishPost.value.description,
+        .post("http://127.0.0.1:8000/api/posts", formData, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
         })
         .then((response) => {
             const newPost = response.data;
@@ -33,6 +41,7 @@ function createPost() {
         })
         .finally(() => {
             publishPost.value.description = "";
+            publishPost.value.images = [];
             closeModal();
         });
 }
@@ -56,9 +65,16 @@ function post_deleted(post_id) {
 }
 
 function onFileChanged($event) {
+    publishPost.value.images = [];
     const target = $event.target;
     if (target && target.files) {
-        publishPost.value.images = target.files[0];
+        if (target.files.length > 3) {
+            alert("You can select up to 3 images");
+            return;
+        }
+        for (let i = 0; i < target.files.length; i++) {
+            publishPost.value.images.push(target.files[i]);
+        }
     }
 }
 
@@ -175,6 +191,9 @@ axios
                                     type="file"
                                     class="hidden"
                                     id="file-upload"
+                                    @change="onFileChanged($event)"
+                                    accept="image/*"
+                                    multiple
                                 />
                                 <label for="file-upload">
                                     <svg
@@ -192,6 +211,10 @@ axios
                                         />
                                     </svg>
                                 </label>
+                                <label
+                                    >{{ publishPost.images.length }} Imagenes
+                                    Seleccionadas</label
+                                >
 
                                 <button
                                     @click="createPost"
@@ -241,6 +264,7 @@ axios
             :saveds_count="post.saveds_count"
             :liked="post.liked"
             :saved="post.saved"
+            :media="post.media"
             @post_updated="post_updated"
             @post_deleted="post_deleted"
         ></shape-post>
