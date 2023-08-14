@@ -34,6 +34,7 @@ function createPost() {
         .then((response) => {
             const newPost = response.data;
             posts.value.unshift(newPost);
+            getCounters();
         })
         .catch((error) => {
             console.log(error);
@@ -52,6 +53,7 @@ function post_updated(post_id) {
             const post_updated = response.data;
             const index = posts.value.findIndex((post) => post.id === post_id);
             posts.value[index] = post_updated;
+            getCounters();
         })
         .catch((error) => {
             console.log(error);
@@ -61,6 +63,7 @@ function post_updated(post_id) {
 function post_deleted(post_id) {
     const index = posts.value.findIndex((post) => post.id === post_id);
     posts.value.splice(index, 1);
+    getCounters();
 }
 
 function onFileChanged($event) {
@@ -101,6 +104,26 @@ function getImages() {
         .then((response) => {
             images.value = response.data;
             console.log(images.value);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+}
+
+const counters = ref({
+    posts_count: 0,
+    followers_count: 0,
+    following_count: 0,
+    likes_count: 0,
+    saveds_count: 0,
+});
+getCounters();
+function getCounters() {
+    axios
+        .get("http://127.0.0.1:8000/api/user")
+        .then((response) => {
+            counters.value = response.data;
+            console.log(response.data);
         })
         .catch((error) => {
             console.log(error);
@@ -173,7 +196,7 @@ function getImages() {
                             >
                             <span
                                 class="text-base font-[Poppins] font-semibold text-primary-color"
-                                >10.3K</span
+                                >{{ counters.posts_count }}</span
                             >
                             <div
                                 class="h-[3px] bg-primary-color rounded-tl-[15px] rounded-tr-[15px] flex items-end"
@@ -189,7 +212,7 @@ function getImages() {
                             >
                             <span
                                 class="text-base font-[Poppins] font-semibold text-color-posts"
-                                >2,564</span
+                                >{{ counters.followers_count }}</span
                             >
                             <div
                                 class="invisible h-[3px] bg-primary-color rounded-tl-[15px] rounded-tr-[15px] flex items-end hi"
@@ -205,7 +228,7 @@ function getImages() {
                             >
                             <span
                                 class="text-base font-[Poppins] font-semibold text-color-posts"
-                                >3,154</span
+                                >{{ counters.following_count }}</span
                             >
                             <div
                                 class="invisible h-[3px] bg-primary-color rounded-tl-[15px] rounded-tr-[15px] flex items-end hi"
@@ -221,7 +244,7 @@ function getImages() {
                             >
                             <span
                                 class="text-base font-[Poppins] font-semibold text-color-posts"
-                                >12.2k</span
+                                >{{ counters.likes_count }}</span
                             >
                             <div
                                 class="invisible h-[3px] bg-primary-color rounded-tl-[15px] rounded-tr-[15px] flex items-end hi"
@@ -237,7 +260,7 @@ function getImages() {
                             >
                             <span
                                 class="text-base font-[Poppins] font-semibold text-color-posts"
-                                >35</span
+                                >0</span
                             >
                             <div
                                 class="invisible h-[3px] bg-primary-color rounded-tl-[15px] rounded-tr-[15px] flex items-end hi"
@@ -253,7 +276,7 @@ function getImages() {
                             >
                             <span
                                 class="text-base font-[Poppins] font-semibold text-color-posts"
-                                >18</span
+                                >{{ counters.saveds_count }}</span
                             >
                             <div
                                 class="invisible h-[3px] bg-primary-color rounded-tl-[15px] rounded-tr-[15px] flex items-end hi"
