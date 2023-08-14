@@ -49,6 +49,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/photos', function () {
         return Inertia::render('Photos');
     })->name('photos');
+    Route::get('/my-profile', function () {
+        return Inertia::render('Profile');
+    })->name('my-profile');
 });
 
 require __DIR__.'/auth.php';

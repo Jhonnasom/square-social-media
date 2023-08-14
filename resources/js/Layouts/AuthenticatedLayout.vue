@@ -225,9 +225,9 @@ function showNotifications() {
                     <!-- Sidebar Izquierdo -->
                     <div class="py-5 px-[10px] h-screen">
                         <!-- Div Photo Profile and username -->
-                        <div
+                        <Link
+                            :href="route('my-profile')"
                             class="flex gap-[10px] ps-3 mb-5 pt-3 w-[230px] min-h-[64px] bg-[#fafafb] rounded-[15px] border border-secondary-gray"
-                            @click="idMenu = 4"
                         >
                             <!-- Photo Profile User -->
                             <div class="h-[42px] w-[32px]">
@@ -253,7 +253,7 @@ function showNotifications() {
                                     >
                                 </div>
                             </div>
-                        </div>
+                        </Link>
                         <!-- Div Feed,Friends,Photos -->
                         <div class="flex gap-4 flex-col w-[250px]">
                             <!-- Feed -->
