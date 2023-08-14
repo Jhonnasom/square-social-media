@@ -111,7 +111,7 @@ axios
                     <div class="h-[66px] flex items-center pl-[15px]">
                         <!-- Icon Profile -->
                         <img
-                            src="#"
+                            :src="$page.props.photo_profile"
                             alt="#"
                             class="bg-gray-800 w-9 h-9 rounded-full mr-[20px] flex"
                         />

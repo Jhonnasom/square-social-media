@@ -74,7 +74,10 @@ function showNotifications() {
 
                                                 <!-- Photo Profile User -->
                                                 <img
-                                                    src="#"
+                                                    :src="
+                                                        $page.props
+                                                            .photo_profile
+                                                    "
                                                     alt="profile-photo"
                                                     class="bg-gray-800 w-[34px] h-[34px] rounded-[25px] flex"
                                                 />
@@ -229,7 +232,7 @@ function showNotifications() {
                             <!-- Photo Profile User -->
                             <div class="h-[42px] w-[32px]">
                                 <img
-                                    src="https://i.pravatar.cc/150?img=3"
+                                    :src="$page.props.photo_profile"
                                     class="rounded-full w-[32px] h-[32px]"
                                 />
                             </div>
@@ -244,7 +247,9 @@ function showNotifications() {
                                 <div>
                                     <span
                                         class="text-[#92929D] text-xs font-normal font-[Roboto] tracking-[0.1px]"
-                                        >@fawaid</span
+                                        >@{{
+                                            $page.props.auth.user.alias
+                                        }}</span
                                     >
                                 </div>
                             </div>
