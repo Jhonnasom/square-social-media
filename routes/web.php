@@ -41,6 +41,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::post('/update_image', [ProfileController::class, 'update_image'])->name('profile.update_image');
     Route::resource('/feed', PostController::class);
     Route::get('/friends', function () {
         return Inertia::render('Friends');
