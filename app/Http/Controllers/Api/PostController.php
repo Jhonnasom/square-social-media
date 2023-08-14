@@ -14,7 +14,7 @@ class PostController extends Controller
     public function index()
     {
         $user_id = auth()->user()->id;
-        $posts = Post::with('user')
+        $posts = Post::with('user.media')
         ->withCount('comments')
         ->withCount('likes')
         ->withCount('shares')
@@ -51,7 +51,7 @@ class PostController extends Controller
           }
         }
 
-        $post_created = Post::with('user')
+        $post_created = Post::with('user.media')
         ->withCount('comments')
         ->withCount('likes')
         ->withCount('shares')
@@ -75,7 +75,7 @@ class PostController extends Controller
     public function show(Post $post)
     {
         $user_id = auth()->user()->id;
-        $post_found = Post::with('user')
+        $post_found = Post::with('user.media')
         ->withCount('comments')
         ->withCount('likes')
         ->withCount('shares')

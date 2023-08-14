@@ -18,6 +18,7 @@ const props = defineProps({
     shares_count: Number,
     saveds_count: Number,
     media: [],
+    auth_photo: String,
 });
 const emit = defineEmits(["post_updated", "post_deleted"]);
 
@@ -122,7 +123,7 @@ function showComments(id) {
             <div class="h-[42px] flex">
                 <!-- Photo -->
                 <img
-                    src="#"
+                    :src="auth_photo"
                     alt="profile-photo"
                     class="bg-gray-800 w-[42px] h-[42px] rounded-[25px] mr-5 flex"
                 />
@@ -425,7 +426,7 @@ function showComments(id) {
         <div class="h-[46p] flex items-center">
             <!-- Icon Profile -->
             <img
-                src="#"
+                :src="auth_photo"
                 alt="profile-photo"
                 class="bg-gray-800 w-[38px] h-[36px] rounded-[25px] mr-[10px] flex"
             />
