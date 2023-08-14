@@ -5,12 +5,6 @@ import IconUploadImage from "@/Components/IconUploadImage.vue";
 import { Modal } from "flowbite-vue";
 import { Head } from "@inertiajs/vue3";
 import { ref } from "vue";
-const props = defineProps({
-    posts: {
-        type: Array,
-        default: () => [],
-    },
-});
 const isShowModal = ref(false);
 function closeModal() {
     isShowModal.value = false;
@@ -85,6 +79,17 @@ function onFileChanged($event) {
         }
     }
 }
+// consumiendo un api con axios
+const posts = ref([]);
+axios
+    .get("http://127.0.0.1:8000/api/posts")
+    .then((response) => {
+        posts.value = response.data;
+        console.log(posts.value);
+    })
+    .catch((error) => {
+        console.log(error);
+    });
 </script>
 
 <template>
@@ -279,39 +284,6 @@ function onFileChanged($event) {
                     @post_updated="post_updated"
                     @post_deleted="post_deleted"
                 ></shape-post>
-                <ShapePost>
-                    <!-- Container de post images -->
-                    <template #post-content>
-                        <div
-                            class="grid grid-cols-6 gap-[10px] w-[585px] h-[330px] mt-[11px]"
-                        >
-                            <div
-                                class="bg-[#6523c8] row-span-2 col-span-3 h-[330px] rounded-[15px]"
-                            >
-                                <img
-                                    src="#"
-                                    class="w-full object-center object-cover h-[330px] rounded-[15px]"
-                                />
-                            </div>
-                            <div
-                                class="bg-[#8ec823] col-span-3 h-[160px] rounded-[15px]"
-                            >
-                                <img
-                                    src="#"
-                                    class="w-full object-center object-cover h-[160px] rounded-[15px]"
-                                />
-                            </div>
-                            <div
-                                class="bg-[#c8238b] row-span-3 col-span-3 h-[160px] rounded-[15px]"
-                            >
-                                <img
-                                    src="#"
-                                    class="w-full object-center object-cover h-[160px] rounded-[15px]"
-                                />
-                            </div>
-                        </div>
-                    </template>
-                </ShapePost>
             </div>
         </template>
     </AuthenticatedLayout>

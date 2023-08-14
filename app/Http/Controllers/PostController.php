@@ -14,25 +14,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $user_id = auth()->user()->id;
-        $posts = Post::with('user')
-        ->withCount('comments')
-        ->withCount('likes')
-        ->withCount('shares')
-        ->withCount('saveds')
-        ->with('media')
-        ->withCount(['likes as liked' => function ($query) use ($user_id) {
-            $query->where('user_id', $user_id);
-        }])
-        ->withCount(['saveds as saved' => function ($query) use ($user_id) {
-            $query->where('user_id', $user_id);
-        }])
-        ->addSelect(\DB::raw( $user_id . ' as auth_id'))
-        ->orderBy('id', 'desc')->get();
-
-        return Inertia::render('Feed', [
-            'posts' => $posts,
-        ]);
+        return Inertia::render('Feed');
     }
 
     /**
