@@ -2,6 +2,26 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/vue3";
 import { useForm } from "@inertiajs/vue3";
+import { ref } from "vue";
+
+const friends = ref([]);
+const sort = ref("desc");
+getFriends();
+function getFriends() {
+    axios
+        .get("http://127.0.0.1:8000/api/friend", {
+            params: {
+                sort: sort.value,
+            },
+        })
+        .then((response) => {
+            friends.value = response.data;
+            console.log(friends.value);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+}
 </script>
 
 <template>
@@ -27,9 +47,11 @@ import { useForm } from "@inertiajs/vue3";
                         </h2>
                         <select
                             class="border-none focus:ring-0 w-[87%] rounded-[10px] pr-0 text-sm font-[Roboto]"
+                            v-model="sort"
+                            @change="getFriends"
                         >
-                            <option value="Newest">Newest F</option>
-                            <option value="Oldest">Oldest</option>
+                            <option value="desc">Newest F</option>
+                            <option value="asc">Oldest</option>
                         </select>
                     </div>
                 </div>
@@ -37,13 +59,21 @@ import { useForm } from "@inertiajs/vue3";
                 <!-- Container de los amigos -->
                 <div class="grid md:grid-cols-2 gap-7">
                     <!-- Container de un amigo -->
-                    <div class="h-[246px] rounded-[15px] bg-white">
+                    <div
+                        class="h-[246px] rounded-[15px] bg-white"
+                        v-for="(friend, i) in friends"
+                        :key="i"
+                    >
                         <!-- Div Foto de Portada -->
                         <div
                             class="h-[100px] bg-gray-700 rounded-tl-[15px] rounded-tr-[15px]"
                         >
                             <img
-                                src="#"
+                                :src="
+                                    friend.media.length > 0
+                                        ? friend.media[0].original_url
+                                        : ''
+                                "
                                 alt=""
                                 class="w-full object-cover rounded-tl-[15px] rounded-tr-[15px]"
                             />
@@ -57,7 +87,11 @@ import { useForm } from "@inertiajs/vue3";
                                 class="w-[86px] h-[86px] bg-slate-300 rounded-full mr-[17px] absolute top-[-20px]"
                             >
                                 <img
-                                    src="#"
+                                    :src="
+                                        friend.media.length > 0
+                                            ? friend.media[0].original_url
+                                            : ''
+                                    "
                                     alt=""
                                     class="w-full h-full object-cover rounded-full"
                                 />
@@ -67,68 +101,15 @@ import { useForm } from "@inertiajs/vue3";
                                     <h2
                                         class="text-lg font-semibold text-[#171725] font-[Poppins]"
                                     >
-                                        Mayke Schuurs
+                                        {{ friend.name }}
                                     </h2>
                                     <span
                                         class="text-sm font-normal font-[Roboto] text-textgray"
-                                        >@maymayke</span
+                                        >@{{ friend.alias }}</span
                                     >
                                     <span
                                         class="text-base leading-[26px] font-normal font-[Roboto] text-[#44444F]"
-                                        >Not a Man but a Ghost 👻</span
-                                    >
-                                </div>
-                                <div>
-                                    <button
-                                        class="bg-primary-color w-20 h-[28px] rounded-[10px] text-white font-[Poppins] text-xs"
-                                    >
-                                        Following
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Container de un amigo -->
-                    <div class="h-[246px] rounded-[15px] bg-white">
-                        <!-- Div Foto de Portada -->
-                        <div
-                            class="h-[100px] bg-gray-700 rounded-tl-[15px] rounded-tr-[15px]"
-                        >
-                            <img
-                                src="#"
-                                alt=""
-                                class="w-full object-cover rounded-tl-[15px] rounded-tr-[15px]"
-                            />
-                        </div>
-                        <!-- Div Foto de Perfil and Information -->
-                        <div
-                            class="h-[146px] px-[20px] flex absolute justify-between"
-                        >
-                            <!-- Photo -->
-                            <div
-                                class="w-[86px] h-[86px] bg-slate-300 rounded-full mr-[17px] absolute top-[-20px]"
-                            >
-                                <img
-                                    src="#"
-                                    alt=""
-                                    class="w-full h-full object-cover rounded-full"
-                                />
-                            </div>
-                            <div class="flex mt-[15px] ml-[128px]">
-                                <div class="flex flex-col">
-                                    <h2
-                                        class="text-lg font-semibold text-[#171725] font-[Poppins]"
-                                    >
-                                        Mayke Schuurs
-                                    </h2>
-                                    <span
-                                        class="text-sm font-normal font-[Roboto] text-textgray"
-                                        >@maymayke</span
-                                    >
-                                    <span
-                                        class="text-base leading-[26px] font-normal font-[Roboto] text-[#44444F]"
-                                        >Not a Man but a Ghost 👻</span
-                                    >
+                                    ></span>
                                 </div>
                                 <div>
                                     <button

@@ -26,4 +26,5 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('posts.shares', 'App\Http\Controllers\Api\ShareController');
     Route::apiResource('posts.saved', 'App\Http\Controllers\Api\SavedController');
     Route::apiResource('photos', 'App\Http\Controllers\Api\PhotoController');
+    Route::apiResource('friend', 'App\Http\Controllers\Api\FriendsController');
 });
