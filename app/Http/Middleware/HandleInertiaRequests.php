@@ -34,7 +34,11 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user(),
             ],
-            'photo_profile' => $request->user()->getFirstMediaUrl('photo_profile'),
+            // se valida que el usuario no sea null
+            'photo_profile' => $request->user() ? $request->user()->getFirstMediaUrl('photo_profile') : null,
+
+            // 'photo_profile' => $request->user()->getFirstMediaUrl('photo_profile')
+            
             'ziggy' => function () use ($request) {
                 return array_merge((new Ziggy)->toArray(), [
                     'location' => $request->url(),
