@@ -133,9 +133,6 @@ function showComments(id) {
                         <!-- 12 April at 09.28 PM -->
                         {{ formatDate(date) }}
                     </p>
-                    <div v-for="image in media" :key="image.id">
-                        <img :src="image.original_url" />
-                    </div>
                 </div>
             </div>
 
@@ -293,7 +290,59 @@ function showComments(id) {
             >{{ description }}</label
         >
 
-        <slot name="post-content"></slot>
+        <!-- Imagen -->
+        <div
+            class="grid grid-cols-6 gap-[10px] w-[585px] h-[330px] mt-[11px]"
+            v-if="media.length > 0"
+        >
+            <div
+                class="bg-[#6523c8] row-span-2 col-span-6 h-[330px] rounded-[15px]"
+                v-if="media.length == 1"
+            >
+                <img
+                    :src="media[0].original_url"
+                    class="w-full object-center object-cover h-[330px] rounded-[15px]"
+                />
+            </div>
+            <div
+                v-else
+                class="bg-[#6523c8] row-span-2 col-span-3 h-[330px] rounded-[15px]"
+            >
+                <img
+                    :src="media[0].original_url"
+                    class="w-full object-center object-cover h-[330px] rounded-[15px]"
+                />
+            </div>
+
+            <div
+                class="bg-[#6523c8] row-span-2 col-span-3 h-[330px] rounded-[15px]"
+                v-if="media.length == 2"
+            >
+                <img
+                    :src="media[1].original_url"
+                    class="w-full object-center object-cover h-[330px] rounded-[15px]"
+                />
+            </div>
+            <div
+                class="bg-[#8ec823] col-span-3 h-[160px] rounded-[15px]"
+                v-if="media.length > 2"
+            >
+                <img
+                    :src="media[1].original_url"
+                    class="w-full object-center object-cover h-[160px] rounded-[15px]"
+                />
+            </div>
+            <div
+                class="bg-[#c8238b] row-span-3 col-span-3 h-[160px] rounded-[15px]"
+                v-if="media.length > 2"
+            >
+                <img
+                    :src="media[2].original_url"
+                    class="w-full object-center object-cover h-[160px] rounded-[15px]"
+                />
+            </div>
+        </div>
+
         <!-- Linea -->
         <div
             class="mt-5 mb-5 border-linegray border-x-0 border-b-0 border"
