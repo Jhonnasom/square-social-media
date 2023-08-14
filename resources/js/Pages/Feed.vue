@@ -147,7 +147,7 @@ axios
                                     <div class="flex items-center gap-5">
                                         <!-- Icon Profile -->
                                         <img
-                                            src="#"
+                                            :src="$page.props.photo_profile"
                                             alt="#"
                                             class="bg-gray-800 w-9 h-9 rounded-3xl mr-[10px] flex"
                                         />
