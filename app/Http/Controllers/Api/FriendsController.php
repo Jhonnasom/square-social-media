@@ -19,7 +19,7 @@ class FriendsController extends Controller
           $sort = request()->input('sort');
         }
 
-        $friends = User::with('media')->where('id', '<>', auth()->user()->id)
+        $friends = auth()->user()->following()->with('media')
         ->orderBy('id', $sort)->get();
     
         return response()->json($friends);
