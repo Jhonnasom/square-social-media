@@ -281,6 +281,11 @@ axios
                     :liked="post.liked"
                     :saved="post.saved"
                     :media="post.media"
+                    :auth_photo="
+                        post.user.media.length > 0
+                            ? post.user.media[0].original_url
+                            : ''
+                    "
                     @post_updated="post_updated"
                     @post_deleted="post_deleted"
                 ></shape-post>
